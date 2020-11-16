@@ -4,13 +4,13 @@ module ila (
     input valid_in,
     input [63:0] data_in,
     input ready,
-    output reg [63:0] data_out,
-    output reg valid_out
+    output [63:0] data_out,
+    output valid_out
 );
 
 wire [7:0] data_int_ch0, data_int_ch1;
 wire valid_interface;
-reg io_token_out;
+wire io_token_out;
 reg io_token;
 
 BSG_UPSTREAM
