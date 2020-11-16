@@ -108,6 +108,8 @@ Memory mem_ch1(
     .r_data(r_data_ch1)
 );
 
+endmodule
+
 
 
 module Memory
