@@ -28,6 +28,7 @@ int main() {
   verilog_file_name = "downstream_ila.v";
   fw_verilog.open(verilog_file_name);
   downstream_ila.model.FlattenHierarchy();
+  downstream_ila.model.ExportToVerilog(fw_verilog);
   fw_verilog.close();
 
   // verilog_file_name = "downstream_child_ila.v";
