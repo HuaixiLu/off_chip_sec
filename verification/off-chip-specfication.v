@@ -6,16 +6,16 @@ module spec (
     input ready,
     output reg [63:0] data_out,
     output reg valid_out
-)
+);
 
 reg [3:0] state;
-`define IDLE 4'd1
-`define Pro  4'd2
-`define Out0 4'd3
-`define Out1 4'd4
-`define Out2 4'd5
-`define Out3 4'd6
-`define STOR 4'd7
+localparam IDLE = 4'd1;
+localparam Pro  = 4'd2;
+localparam Out0 = 4'd3;
+localparam Out1 = 4'd4;
+localparam Out2 = 4'd5;
+localparam Out3 = 4'd6;
+localparam STOR = 4'd7;
 
 //up
 reg [6:0] up_cnt;
@@ -38,7 +38,6 @@ always @(posedge clk) begin
     if(rst) begin
         state <= IDLE;
         up_cnt <= 0;
-        down_rptr <= 0;
         down_wptr <= 0;
         down_wen <= 0;
     end
@@ -93,22 +92,26 @@ end
 
 reg valid_temp;
 always @(posedge clk) begin
-
-    if (ready && valid_out)
-        valid_out <= 0;
-    else if (valid_temp) begin
-        data_out <= {{down_data_out1[31:16],down_data_out0[31:16]},{down_data_out1[15:0],down_data_out0[15:0]}};
-        valid_out <= 1;
+    if (rst) begin
+        down_rptr <= 0;
     end
+    else begin
+        if (ready && valid_out)
+            valid_out <= 0;
+        else if (valid_temp) begin
+            data_out <= {{down_data_out1[31:16],down_data_out0[31:16]},{down_data_out1[15:0],down_data_out0[15:0]}};
+            valid_out <= 1;
+        end
 
-    if (ready & down_wptr != down_rptr & down_rptr[0] == 0) begin
-        down_data_out0 <= down_data_o;
-        down_rptr <= down_rptr + 1;
-    end
-    else if (ready & down_wptr != down_rptr & down_rptr[0] == 1) begin
-        down_data_out1 <= down_data_o;
-        down_rptr <= down_rptr + 1;
-        valid_temp <= 1;
+        if (ready & down_wptr != down_rptr & down_rptr[0] == 0) begin
+            down_data_out0 <= down_data_o;
+            down_rptr <= down_rptr + 1;
+        end
+        else if (ready & down_wptr != down_rptr & down_rptr[0] == 1) begin
+            down_data_out1 <= down_data_o;
+            down_rptr <= down_rptr + 1;
+            valid_temp <= 1;
+        end
     end
 end
 
@@ -172,7 +175,7 @@ module Memory
             mem[7] <= 0;
 		end
 		else if (w_en) begin
-			mem[waddr] <= w_data;
+			mem[w_addr] <= w_data;
 		end
 	end
 
