@@ -1,0 +1,2 @@
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar qc libBSGOFFCHIP.a CMakeFiles/BSGOFFCHIP.dir/src/upstream_ila.cc.o CMakeFiles/BSGOFFCHIP.dir/src/downstream_ila.cc.o CMakeFiles/BSGOFFCHIP.dir/src/upstream_child.cc.o CMakeFiles/BSGOFFCHIP.dir/src/downstream_child.cc.o
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib libBSGOFFCHIP.a

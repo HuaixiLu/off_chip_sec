@@ -1,0 +1,4 @@
+/Users/luhuaixi/Desktop/Github/off_chip_sec/build/CMakeFiles/BSGOFFCHIPExe.dir
+/Users/luhuaixi/Desktop/Github/off_chip_sec/build/CMakeFiles/rebuild_cache.dir
+/Users/luhuaixi/Desktop/Github/off_chip_sec/build/CMakeFiles/edit_cache.dir
+/Users/luhuaixi/Desktop/Github/off_chip_sec/build/CMakeFiles/BSGOFFCHIP.dir
