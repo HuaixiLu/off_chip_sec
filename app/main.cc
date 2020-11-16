@@ -16,23 +16,24 @@ int main() {
 
   std::string verilog_file_name = "upstream_ila.v";
   std::ofstream fw_verilog(verilog_file_name);
+  upstream_ila.model.FlattenHierarchy();
   upstream_ila.model.ExportToVerilog(fw_verilog);
   fw_verilog.close();
 
-  verilog_file_name = "upstream_child_ila.v";
-  fw_verilog.open(verilog_file_name);
-  upstream_ila.model.child(0).ExportToVerilog(fw_verilog);
-  fw_verilog.close();
+  // verilog_file_name = "upstream_child_ila.v";
+  // fw_verilog.open(verilog_file_name);
+  // upstream_ila.model.child(0).ExportToVerilog(fw_verilog);
+  // fw_verilog.close();
 
   verilog_file_name = "downstream_ila.v";
   fw_verilog.open(verilog_file_name);
-  downstream_ila.model.ExportToVerilog(fw_verilog);
+  downstream_ila.model.FlattenHierarchy();
   fw_verilog.close();
 
-  verilog_file_name = "downstream_child_ila.v";
-  fw_verilog.open(verilog_file_name);
-  downstream_ila.model.child(0).ExportToVerilog(fw_verilog);
-  fw_verilog.close();
+  // verilog_file_name = "downstream_child_ila.v";
+  // fw_verilog.open(verilog_file_name);
+  // downstream_ila.model.child(0).ExportToVerilog(fw_verilog);
+  // fw_verilog.close();
 
   return 0;
 }

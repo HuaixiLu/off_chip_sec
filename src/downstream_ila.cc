@@ -71,7 +71,7 @@ BSG_DOWNSTREAM::BSG_DOWNSTREAM()
 
         auto data_out = Load(buffer, rptr(BUFFER_BIT-1,0));
         auto rptr_updated = rptr + 1;
-        instr.SetUpdate(io_token_out, rptr_updated(3));
+        instr.SetUpdate(io_token_out, rptr_updated(2));
         instr.SetUpdate(core_data1, data_out);
         instr.SetUpdate(rptr, rptr + 1);
         instr.SetUpdate(full, BvConst(0,1));

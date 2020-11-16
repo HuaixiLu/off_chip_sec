@@ -7,7 +7,7 @@ void BSG_UPSTREAM::AddChild(InstrRef& inst) {
   auto child = model.NewChild("BSG_UPSTREAM_OUT");
 
   child.SetValid(child_valid == BvConst(1,1));
-  auto ready = (sent_cnt - finish_cnt) < BvConst(64, 7);
+  auto ready = (sent_cnt - finish_cnt) < BvConst(8, BUFFER_BIT + 1);
   auto cnt = child.NewBvState("counter", 1);
   auto commit = child.NewBvState("commit", 1);
   auto data_temp = child.NewBvState("data_temp", 64);

@@ -16,8 +16,8 @@ using namespace ilang;
 #define CHANNEL_WIDTH   8
 #define DATA_TEMP_WIDTH 16 // 2*8
 
-#define BUFFER_SIZE     64
-#define BUFFER_BIT      6
+#define BUFFER_SIZE     32
+#define BUFFER_BIT      3
 
 #define b0 BoolConst(false)
 #define b1 BoolConst(true)
