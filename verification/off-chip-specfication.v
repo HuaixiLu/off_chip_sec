@@ -18,7 +18,7 @@ localparam Out3 = 4'd6;
 localparam STOR = 4'd7;
 
 //up
-reg [6:0] up_cnt;
+reg [4:0] up_cnt;
 reg [63:0] temp_data;
 reg [15:0] data0;
 reg [15:0] data1;
@@ -26,13 +26,18 @@ reg [15:0] data2;
 reg [15:0] data3;
 
 // down
-reg [6:0]  down_rptr;
-reg [6:0]  down_wptr;
+reg [4:0]  down_rptr;
+reg [4:0]  down_wptr;
 reg [31:0] down_wdata;
 reg        down_wen;
 wire [31:0] down_data_o;
 reg [31:0] down_data_out0;
 reg [31:0] down_data_out1;
+
+reg valid_temp;
+reg down_rptr_token;
+wire token;
+assign token = (down_rptr_token ^ down_rptr[2]);
 
 always @(posedge clk) begin
     if(rst) begin
@@ -90,7 +95,7 @@ always @(posedge clk) begin
     end
 end
 
-reg valid_temp;
+
 always @(posedge clk) begin
     if (rst) begin
         down_rptr <= 0;
@@ -106,6 +111,7 @@ always @(posedge clk) begin
         if (ready & down_wptr != down_rptr & down_rptr[0] == 0) begin
             down_data_out0 <= down_data_o;
             down_rptr <= down_rptr + 1;
+            valid_temp <= 0;
         end
         else if (ready & down_wptr != down_rptr & down_rptr[0] == 1) begin
             down_data_out1 <= down_data_o;
@@ -115,15 +121,10 @@ always @(posedge clk) begin
     end
 end
 
-reg down_rptr_token;
-
 always @(posedge clk) begin
     if (rst) down_rptr_token <= 0;
     else down_rptr_token <= down_rptr[2];
 end
-
-wire token;
-assign token = (down_rptr_token ^ down_rptr[2]);
 
 Memory mem(
     .clk(clk),
