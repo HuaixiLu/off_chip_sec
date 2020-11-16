@@ -27,7 +27,7 @@ data_temp,
 commit,
 counter
 );
-input      [6:0] __ILA_BSG_UPSTREAM_grant__;
+input     [6:0]  __ILA_BSG_UPSTREAM_grant__;
 input            clk;
 input            core_clk;
 input     [63:0] core_data_in;
