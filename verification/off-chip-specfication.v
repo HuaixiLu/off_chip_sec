@@ -1,21 +1,21 @@
-module spec {
+module spec (
     input clk,
     input rst,
     input [63:0] data_in,
     input valid_in,
     input ready,
-    output [63:0] data_out,
-    output valid_out
-}
+    output reg [63:0] data_out,
+    output reg valid_out
+)
 
 reg [3:0] state;
-localparam IDLE == 4'd1;
-localparam Pro  == 4'd2;
-localparam Out0 == 4'd3;
-localparam Out1 == 4'd4;
-localparam Out2 == 4'd5;
-localparam Out3 == 4'd6;
-localparam STOR == 4'd7;
+`define IDLE 4'd1
+`define Pro  4'd2
+`define Out0 4'd3
+`define Out1 4'd4
+`define Out2 4'd5
+`define Out3 4'd6
+`define STOR 4'd7
 
 //up
 reg [6:0] up_cnt;
@@ -44,18 +44,20 @@ always @(posedge clk) begin
     end
     else begin
         case(state)
-            IDLE: if(valid_in && up_cnt < 8) begin
+            IDLE: begin 
+                if(valid_in && up_cnt < 8) begin
                 state <= Out0;
                 temp_data <= data_in;
+                end
+                if(token) up_cnt <= up_cnt - 4;
             end
-            if(token) up_cnt <= up_cnt - 4;
             Out0: begin 
-                data0 <= {temp_data[39:32], temp[7:0]};
+                data0 <= {temp_data[39:32], temp_data[7:0]};
                 state <= Out1;
                 if(token) up_cnt <= up_cnt - 4;
             end
             Out1: begin
-                data1 <= {temp_data[47:40], temp[15:8]};
+                data1 <= {temp_data[47:40], temp_data[15:8]};
                 state <= Out2;
                 down_wen <= 1;
                 if(token) up_cnt <= up_cnt - 3;
@@ -63,7 +65,7 @@ always @(posedge clk) begin
             end
             Out2: begin
                 // Store data0 & data1
-                data2 <= {temp_data[55:48], temp[23:16]};
+                data2 <= {temp_data[55:48], temp_data[23:16]};
                 down_wptr <= down_wptr + 1;
                 down_wdata <= {{data1[15:8],data0[15:8]}, {data1[7:0], data0[7:0]}};
                 state <= Out3;
@@ -71,7 +73,7 @@ always @(posedge clk) begin
                 if(token) up_cnt <= up_cnt - 4;
             end
             Out3: begin
-                data3 <= {temp_data[63:56], temp[31:24]};
+                data3 <= {temp_data[63:56], temp_data[31:24]};
                 state <= STOR;
                 down_wen <= 1;
                 if(token) up_cnt <= up_cnt - 3;
@@ -80,11 +82,12 @@ always @(posedge clk) begin
             end
             STOR: begin
                 down_wptr <= down_wptr + 1;
-                down_wdata <= {{data3{15:8],data2[15:8]}, {data3[7:0], data2[7:0]}};
+                down_wdata <= {{data3[15:8],data2[15:8]}, {data3[7:0], data2[7:0]}};
                 down_wen <= 0;
                 if(token) up_cnt <= up_cnt - 4; 
                 state <= IDLE;
             end
+        endcase
     end
 end
 
@@ -157,18 +160,20 @@ module Memory
 	assign r_data = mem[r_addr];
 
 	// Synchronous Reset + Write
-	genvar i;
-	generate
-		for (i = 0; i < N_ELEMENTS; i = i + 1) begin : wport
-			always @(posedge clk) begin
-				if (rst) begin
-					mem[i] <= 0;
-				end
-				else if (w_en && w_addr == i) begin
-					mem[i] <= w_data;
-				end
-			end
+	always @(posedge clk) begin
+		if (rst) begin
+			mem[0] <= 0;
+            mem[1] <= 0;
+            mem[2] <= 0;
+            mem[3] <= 0;
+            mem[4] <= 0;
+            mem[5] <= 0;
+            mem[6] <= 0;
+            mem[7] <= 0;
 		end
-	endgenerate
+		else if (w_en) begin
+			mem[waddr] <= w_data;
+		end
+	end
 
 endmodule
