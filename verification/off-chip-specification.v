@@ -62,6 +62,7 @@ always @(posedge clk) begin
             end
             Out1: begin
                 data1 <= {temp_data[47:40], temp_data[15:8]};
+                down_wdata <= {{temp_data[47:40],data0[15:8]}, {temp_data[15:8], data0[7:0]}};
                 state <= Out2;
                 down_wen <= 1;
                 if (token) up_cnt <= up_cnt - 3;
@@ -71,13 +72,13 @@ always @(posedge clk) begin
                 // Store data0 & data1
                 data2 <= {temp_data[55:48], temp_data[23:16]};
                 down_wptr <= down_wptr + 1;
-                down_wdata <= {{data1[15:8],data0[15:8]}, {data1[7:0], data0[7:0]}};
                 state <= Out3;
                 down_wen <= 0;
                 if (token) up_cnt <= up_cnt - 4;
             end
             Out3: begin
                 data3 <= {temp_data[63:56], temp_data[31:24]};
+                down_wdata <= {{temp_data[63:56],data2[15:8]}, {temp_data[31:24], data2[7:0]}};
                 state <= STOR;
                 down_wen <= 1;
                 if (token) up_cnt <= up_cnt - 3;
@@ -86,7 +87,6 @@ always @(posedge clk) begin
             end
             STOR: begin
                 down_wptr <= down_wptr + 1;
-                down_wdata <= {{data3[15:8],data2[15:8]}, {data3[7:0], data2[7:0]}};
                 down_wen <= 0;
                 if (token) up_cnt <= up_cnt - 4;
                 if (valid_in && up_cnt < 8) begin
