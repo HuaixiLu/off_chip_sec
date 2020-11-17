@@ -49,7 +49,7 @@ always @(posedge clk) begin
     else begin
         case(state)
             IDLE: begin 
-                if (valid_in && up_cnt < 8) begin
+                if (valid_in) begin
                 state <= Out0;
                 temp_data <= data_in;
                 end
@@ -57,7 +57,7 @@ always @(posedge clk) begin
             end
             Out0: begin 
                 data0 <= {temp_data[39:32], temp_data[7:0]};
-                state <= Out1;
+                if (up_cnt < 8) state <= Out1;
                 if (token) up_cnt <= up_cnt - 4;
             end
             Out1: begin
@@ -89,7 +89,7 @@ always @(posedge clk) begin
                 down_wptr <= down_wptr + 1;
                 down_wen <= 0;
                 if (token) up_cnt <= up_cnt - 4;
-                if (valid_in && up_cnt < 8) begin
+                if (valid_in) begin
                     state <= Out0;
                     temp_data <= data_in;
                 end
