@@ -165,7 +165,7 @@ module Memory_32
 	reg [DATA_WIDTH-1:0] mem[N_ELEMENTS:0];
 
 	// Continuous Read
-	assign r_data = mem[r_addr];
+	assign r_data = mem[r_addr[2:0]];
 
 	// Synchronous Reset + Write
 	always @(posedge clk) begin
@@ -180,7 +180,7 @@ module Memory_32
             mem[7] <= 0;
 		end
 		else if (w_en) begin
-			mem[w_addr] <= w_data;
+			mem[w_addr[2:0]] <= w_data;
 		end
 	end
 
