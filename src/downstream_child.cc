@@ -11,7 +11,7 @@ void BSG_DOWNSTREAM::AddChild(InstrRef& inst) {
 
   { // First Cycle of Output: positive
     auto instr = child.NewInstr("DOWN_OUTPUT_FINAL");
-    instr.SetDecode(child_valid == BvConst(1,1) & core_clk == BvConst(1,1));
+    instr.SetDecode(child_valid == BvConst(1, 1) & core_clk == BvConst(0, 1));
 
     instr.SetUpdate(core_data_out, Concat(core_data1, core_data0));
     instr.SetUpdate(core_valid_out, BvConst(1, 1));
