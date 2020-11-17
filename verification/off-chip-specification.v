@@ -1,10 +1,10 @@
 module spec (
     input clk,
     input rst,
-    input [63:0] data_in,
+    input [7:0] data_in,
     input valid_in,
     input ready,
-    output reg [63:0] data_out,
+    output reg [7:0] data_out,
     output reg valid_out
 );
 
@@ -19,20 +19,20 @@ localparam STOR = 4'd7;
 
 //up
 reg [4:0] up_cnt;
-reg [63:0] temp_data;
-reg [15:0] data0;
-reg [15:0] data1;
-reg [15:0] data2;
-reg [15:0] data3;
+reg [7:0] temp_data;
+reg [1:0] data0;
+reg [1:0] data1;
+reg [1:0] data2;
+reg [1:0] data3;
 
 // down
 reg [4:0]  down_rptr;
 reg [4:0]  down_wptr;
-reg [31:0] down_wdata;
+reg [3:0] down_wdata;
 reg        down_wen;
-wire [31:0] down_data_o;
-reg [31:0] down_data_out0;
-reg [31:0] down_data_out1;
+wire [3:0] down_data_o;
+reg [3:0] down_data_out0;
+reg [3:0] down_data_out1;
 
 reg valid_temp;
 reg down_rptr_token;
@@ -56,13 +56,13 @@ always @(posedge clk) begin
                 if (token) up_cnt <= up_cnt - 4;
             end
             Out0: begin 
-                data0 <= {temp_data[39:32], temp_data[7:0]};
+                data0 <= {temp_data[4], temp_data[0]};
                 if (up_cnt < 8) state <= Out1;
                 if (token) up_cnt <= up_cnt - 4;
             end
             Out1: begin
-                data1 <= {temp_data[47:40], temp_data[15:8]};
-                down_wdata <= {{temp_data[47:40],data0[15:8]}, {temp_data[15:8], data0[7:0]}};
+                data1 <= {temp_data[5], temp_data[1]};
+                down_wdata <= {{temp_data[5],data0[1]}, {temp_data[1], data0[0]}};
                 state <= Out2;
                 down_wen <= 1;
                 if (token) up_cnt <= up_cnt - 3;
@@ -70,15 +70,15 @@ always @(posedge clk) begin
             end
             Out2: begin
                 // Store data0 & data1
-                data2 <= {temp_data[55:48], temp_data[23:16]};
+                data2 <= {temp_data[6], temp_data[2]};
                 down_wptr <= down_wptr + 1;
                 state <= Out3;
                 down_wen <= 0;
                 if (token) up_cnt <= up_cnt - 4;
             end
             Out3: begin
-                data3 <= {temp_data[63:56], temp_data[31:24]};
-                down_wdata <= {{temp_data[63:56],data2[15:8]}, {temp_data[31:24], data2[7:0]}};
+                data3 <= {temp_data[7], temp_data[3]};
+                down_wdata <= {{temp_data[7],data2[1]}, {temp_data[3], data2[0]}};
                 state <= STOR;
                 down_wen <= 1;
                 if (token) up_cnt <= up_cnt - 3;
@@ -147,7 +147,7 @@ module Memory_32
 #(
 	parameter N_ELEMENTS = 8,
 	parameter ADDR_WIDTH = 4,
-	parameter DATA_WIDTH = 32
+	parameter DATA_WIDTH = 4
 )(
 	// Inputs
 	input                   clk,    // Clock

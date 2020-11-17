@@ -11,12 +11,12 @@
 
 using namespace ilang;
 
-#define CORE_WIDTH      64
+#define CORE_WIDTH      8
 #define CHANNEL_NUM     2
-#define CHANNEL_WIDTH   8
-#define DATA_TEMP_WIDTH 16 // 2*8
+#define CHANNEL_WIDTH   1
+#define DATA_TEMP_WIDTH 2 // 2*8
 
-#define BUFFER_SIZE     32
+#define BUFFER_SIZE     4
 #define BUFFER_BIT      3
 
 #define b0 BoolConst(false)

@@ -2,13 +2,13 @@ module ila (
     input clk,
     input rst,
     input valid_in,
-    input [63:0] data_in,
+    input [7:0] data_in,
     input ready,
-    output [63:0] data_out,
+    output [7:0] data_out,
     output valid_out
 );
 
-wire [7:0] data_int_ch0, data_int_ch1;
+wire data_int_ch0, data_int_ch1;
 wire valid_interface;
 wire io_token_out;
 reg io_token;
@@ -45,7 +45,7 @@ downstream_0
     .buffer_data0    (w_data_ch0),
     .buffer_wen0     (w_en_ch0),
     .buffer_addr_n68 (r_addr_ch0),
-    .core_data_out ({data_out[47:32], data_out[15:0]}),
+    .core_data_out ({data_out[5:4], data_out[1:0]}),
     .core_valid_out (valid_out),
     .io_token_out (io_token_out)
 );
@@ -56,10 +56,10 @@ always @(posedge clk) begin
 end
 
 wire w_en_ch0;
-wire [15:0] w_data_ch0;
+wire [1:0] w_data_ch0;
 wire [2:0] w_addr_ch0;
 wire [2:0] r_addr_ch0;
-wire [15:0] r_data_ch0;
+wire [1:0] r_data_ch0;
 
 Memory mem_ch0(
     .clk(clk),
@@ -87,16 +87,16 @@ downstream_1
     .buffer_data0    (w_data_ch1),
     .buffer_wen0     (w_en_ch1),
     .buffer_addr_n68 (r_addr_ch1),
-    .core_data_out ({data_out[63:48], data_out[31:16]}),
+    .core_data_out ({data_out[7:6], data_out[3:2]}),
     .core_valid_out (),
     .io_token_out ()
 );
 
 wire w_en_ch1;
-wire [15:0] w_data_ch1;
+wire [1:0] w_data_ch1;
 wire [2:0] w_addr_ch1;
 wire [2:0] r_addr_ch1;
-wire [15:0] r_data_ch1;
+wire [1:0] r_data_ch1;
 
 Memory mem_ch1(
     .clk(clk),
@@ -116,7 +116,7 @@ module Memory
 #(
 	parameter N_ELEMENTS = 8,
 	parameter ADDR_WIDTH = 4,
-	parameter DATA_WIDTH = 16
+	parameter DATA_WIDTH = 2
 )(
 	// Inputs
 	input                   clk,    // Clock
