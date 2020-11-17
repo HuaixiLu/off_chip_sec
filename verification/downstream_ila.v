@@ -184,7 +184,7 @@ assign n24 =  ( n22 ) & (n23 )  ;
 assign __ILA_BSG_DOWNSTREAM_ch_decode_of_DOWN_DATA_OUT1__ = n24 ;
 assign __ILA_BSG_DOWNSTREAM_ch_acc_decode__[2] = __ILA_BSG_DOWNSTREAM_ch_decode_of_DOWN_DATA_OUT1__ ;
 assign n25 =  ( child_valid ) == ( bv_1_1_n0 )  ;
-assign n26 =  ( core_clk ) == ( bv_1_1_n0 )  ;
+assign n26 =  ( core_clk ) == ( bv_1_0_n4 )  ;
 assign n27 =  ( n25 ) & (n26 )  ;
 assign __ILA_BSG_DOWNSTREAM_ch_decode_of_DOWN_OUTPUT_FINAL__ = n27 ;
 assign __ILA_BSG_DOWNSTREAM_ch_acc_decode__[3] = __ILA_BSG_DOWNSTREAM_ch_decode_of_DOWN_OUTPUT_FINAL__ ;
