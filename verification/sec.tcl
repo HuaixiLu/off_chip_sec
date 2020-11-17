@@ -8,6 +8,6 @@ analyze -sva  \
 
 elaborate -top sec
 clock clk
-reset rst
+reset -expression {rst} {:global_formal_reset} -non_resettable_regs {0};
 
 assert {ila_data == spec_data}
