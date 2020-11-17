@@ -38,7 +38,7 @@ BSG_UPSTREAM::BSG_UPSTREAM()
 
     {
         auto instr = model.NewInstr("TOKEN_IN");
-        instr.SetDecode(io_token == BvConst(1,1) & core_valid_in == BvConst(0,1) & core_clk == BvConst(0,1));
+        instr.SetDecode(io_token == BvConst(1,1) & core_clk == BvConst(0,1));
         instr.SetUpdate(finish_cnt, finish_cnt + BvConst(4, BUFFER_BIT + 1));
     }
 
