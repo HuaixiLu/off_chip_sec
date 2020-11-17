@@ -27,7 +27,7 @@ data_temp,
 commit,
 counter
 );
-input     [6:0]  __ILA_BSG_UPSTREAM_grant__;
+input      [6:0] __ILA_BSG_UPSTREAM_grant__;
 input            clk;
 input            core_clk;
 input     [63:0] core_data_in;
@@ -67,6 +67,7 @@ wire            __ILA_BSG_UPSTREAM_valid__;
 wire            bv_1_0_n2;
 wire            bv_1_1_n0;
 wire      [3:0] bv_4_1_n56;
+wire      [3:0] bv_4_4_n59;
 wire      [3:0] bv_4_8_n24;
 wire            clk;
 wire            core_clk;
@@ -124,10 +125,9 @@ wire     [31:0] n54;
 wire     [31:0] n55;
 wire      [3:0] n57;
 wire      [3:0] n58;
-wire      [3:0] n59;
 wire            n6;
 wire      [3:0] n60;
-wire      [7:0] n61;
+wire      [3:0] n61;
 wire      [7:0] n62;
 wire      [7:0] n63;
 wire      [7:0] n64;
@@ -135,6 +135,7 @@ wire      [7:0] n65;
 wire      [7:0] n66;
 wire      [7:0] n67;
 wire      [7:0] n68;
+wire      [7:0] n69;
 wire            n7;
 wire            n8;
 wire            n9;
@@ -213,16 +214,17 @@ assign n55 = core_data_in[63:32] ;
 assign bv_4_1_n56 = 4'h1 ;
 assign n57 =  ( sent_cnt ) + ( bv_4_1_n56 )  ;
 assign n58 =  ( sent_cnt ) + ( bv_4_1_n56 )  ;
-assign n59 =  ( finish_cnt ) + ( bv_4_8_n24 )  ;
-assign n60 =  ( finish_cnt ) + ( bv_4_8_n24 )  ;
-assign n61 = data_cycle_0[7:0] ;
-assign n62 = data_temp[15:8] ;
-assign n63 = data_cycle_1[7:0] ;
-assign n64 = data_temp[15:8] ;
-assign n65 = data_cycle_0[23:16] ;
-assign n66 = data_temp[31:24] ;
-assign n67 = data_cycle_1[23:16] ;
-assign n68 = data_temp[31:24] ;
+assign bv_4_4_n59 = 4'h4 ;
+assign n60 =  ( finish_cnt ) + ( bv_4_4_n59 )  ;
+assign n61 =  ( finish_cnt ) + ( bv_4_4_n59 )  ;
+assign n62 = data_cycle_0[7:0] ;
+assign n63 = data_temp[15:8] ;
+assign n64 = data_cycle_1[7:0] ;
+assign n65 = data_temp[15:8] ;
+assign n66 = data_cycle_0[23:16] ;
+assign n67 = data_temp[31:24] ;
+assign n68 = data_cycle_1[23:16] ;
+assign n69 = data_temp[31:24] ;
 always @(posedge clk) begin
    if(rst) begin
    end
@@ -259,27 +261,27 @@ always @(posedge clk) begin
            sent_cnt <= n58;
        end
        if ( __ILA_BSG_UPSTREAM_decode_of_TOKEN_IN__ && __ILA_BSG_UPSTREAM_grant__[0] ) begin
-           finish_cnt <= n59;
-       end else if ( __ILA_BSG_UPSTREAM_decode_of_TOKEN_AND_DATA__ && __ILA_BSG_UPSTREAM_grant__[1] ) begin
            finish_cnt <= n60;
+       end else if ( __ILA_BSG_UPSTREAM_decode_of_TOKEN_AND_DATA__ && __ILA_BSG_UPSTREAM_grant__[1] ) begin
+           finish_cnt <= n61;
        end
        if ( __ILA_BSG_UPSTREAM_decode_of_Output0_p__ && __ILA_BSG_UPSTREAM_grant__[3] ) begin
-           io_data_out_ch0 <= n61;
-       end else if ( __ILA_BSG_UPSTREAM_decode_of_Output0_n__ && __ILA_BSG_UPSTREAM_grant__[4] ) begin
            io_data_out_ch0 <= n62;
-       end else if ( __ILA_BSG_UPSTREAM_decode_of_Output1_p__ && __ILA_BSG_UPSTREAM_grant__[5] ) begin
+       end else if ( __ILA_BSG_UPSTREAM_decode_of_Output0_n__ && __ILA_BSG_UPSTREAM_grant__[4] ) begin
            io_data_out_ch0 <= n63;
-       end else if ( __ILA_BSG_UPSTREAM_decode_of_Output1_n__ && __ILA_BSG_UPSTREAM_grant__[6] ) begin
+       end else if ( __ILA_BSG_UPSTREAM_decode_of_Output1_p__ && __ILA_BSG_UPSTREAM_grant__[5] ) begin
            io_data_out_ch0 <= n64;
+       end else if ( __ILA_BSG_UPSTREAM_decode_of_Output1_n__ && __ILA_BSG_UPSTREAM_grant__[6] ) begin
+           io_data_out_ch0 <= n65;
        end
        if ( __ILA_BSG_UPSTREAM_decode_of_Output0_p__ && __ILA_BSG_UPSTREAM_grant__[3] ) begin
-           io_data_out_ch1 <= n65;
-       end else if ( __ILA_BSG_UPSTREAM_decode_of_Output0_n__ && __ILA_BSG_UPSTREAM_grant__[4] ) begin
            io_data_out_ch1 <= n66;
-       end else if ( __ILA_BSG_UPSTREAM_decode_of_Output1_p__ && __ILA_BSG_UPSTREAM_grant__[5] ) begin
+       end else if ( __ILA_BSG_UPSTREAM_decode_of_Output0_n__ && __ILA_BSG_UPSTREAM_grant__[4] ) begin
            io_data_out_ch1 <= n67;
-       end else if ( __ILA_BSG_UPSTREAM_decode_of_Output1_n__ && __ILA_BSG_UPSTREAM_grant__[6] ) begin
+       end else if ( __ILA_BSG_UPSTREAM_decode_of_Output1_p__ && __ILA_BSG_UPSTREAM_grant__[5] ) begin
            io_data_out_ch1 <= n68;
+       end else if ( __ILA_BSG_UPSTREAM_decode_of_Output1_n__ && __ILA_BSG_UPSTREAM_grant__[6] ) begin
+           io_data_out_ch1 <= n69;
        end
        if ( __ILA_BSG_UPSTREAM_decode_of_Output0_p__ && __ILA_BSG_UPSTREAM_grant__[3] ) begin
            data_temp <= data_cycle_0;

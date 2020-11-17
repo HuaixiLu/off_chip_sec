@@ -39,7 +39,7 @@ BSG_UPSTREAM::BSG_UPSTREAM()
     {
         auto instr = model.NewInstr("TOKEN_IN");
         instr.SetDecode(io_token == BvConst(1,1) & core_valid_in == BvConst(0,1) & core_clk == BvConst(0,1));
-        instr.SetUpdate(finish_cnt, finish_cnt + BvConst(8, BUFFER_BIT + 1));
+        instr.SetUpdate(finish_cnt, finish_cnt + BvConst(4, BUFFER_BIT + 1));
     }
 
     {
@@ -47,7 +47,7 @@ BSG_UPSTREAM::BSG_UPSTREAM()
         instr.SetDecode(io_token == BvConst(1,1) & (core_valid_in == BvConst(1,1) & core_clk == BvConst(0,1) & child_valid == BvConst(0, 1)));
         instr.SetUpdate(data_cycle_0, Extract(core_data_in, CORE_WIDTH/2 - 1, 0));
         instr.SetUpdate(data_cycle_1, Extract(core_data_in, CORE_WIDTH - 1, CORE_WIDTH/2));
-        instr.SetUpdate(finish_cnt, finish_cnt + BvConst(8, BUFFER_BIT + 1));
+        instr.SetUpdate(finish_cnt, finish_cnt + BvConst(4, BUFFER_BIT + 1));
         instr.SetUpdate(child_valid, BvConst(1,1));
         AddChild(instr);
     }
