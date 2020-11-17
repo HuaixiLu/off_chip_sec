@@ -3,7 +3,7 @@ analyze -sva  \
     off-chip-ila.v \
     upstream_ila.v \
     downstream_ila.v \
-    sec-wrapper
+    sec-wrapper.v
 
 
 elaborate -top sec
