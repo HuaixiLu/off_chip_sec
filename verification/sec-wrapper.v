@@ -27,4 +27,6 @@ spec spec_off_chip (
     .ready (ready),
     .data_out (spec_data),
     .valid_out (spec_valid)  
-)
+);
+
+endmodule
