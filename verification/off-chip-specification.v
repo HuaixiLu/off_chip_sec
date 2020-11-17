@@ -108,7 +108,7 @@ always @(posedge clk) begin
         if (ready && valid_out)
             valid_out <= 0;
         else if (valid_temp) begin
-            data_out <= {{down_data_out1[31:16],down_data_out0[31:16]},{down_data_out1[15:0],down_data_out0[15:0]}};
+            data_out <= {{down_data_out1[3:2],down_data_out0[3:2]},{down_data_out1[1:0],down_data_out0[1:0]}};
             valid_out <= 1;
         end
 
