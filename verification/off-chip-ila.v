@@ -45,7 +45,7 @@ downstream_0
     .buffer_data0    (w_data_ch0),
     .buffer_wen0     (w_en_ch0),
     .buffer_addr_n68 (r_addr_ch0),
-    .core_data_out (data_out[31:0]),
+    .core_data_out ({data_out[47:32], data_out[15:0]}),
     .core_valid_out (valid_out),
     .io_token_out (io_token_out)
 );
@@ -87,7 +87,7 @@ downstream_1
     .buffer_data0    (w_data_ch1),
     .buffer_wen0     (w_en_ch1),
     .buffer_addr_n68 (r_addr_ch1),
-    .core_data_out (data_out[63:32]),
+    .core_data_out ({data_out[63:48], data_out[31:16]}),
     .core_valid_out (),
     .io_token_out ()
 );
