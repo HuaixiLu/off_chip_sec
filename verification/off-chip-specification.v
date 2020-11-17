@@ -49,22 +49,22 @@ always @(posedge clk) begin
     else begin
         case(state)
             IDLE: begin 
-                if(valid_in && up_cnt < 8) begin
+                if (valid_in && up_cnt < 8) begin
                 state <= Out0;
                 temp_data <= data_in;
                 end
-                if(token) up_cnt <= up_cnt - 4;
+                if (token) up_cnt <= up_cnt - 4;
             end
             Out0: begin 
                 data0 <= {temp_data[39:32], temp_data[7:0]};
                 state <= Out1;
-                if(token) up_cnt <= up_cnt - 4;
+                if (token) up_cnt <= up_cnt - 4;
             end
             Out1: begin
                 data1 <= {temp_data[47:40], temp_data[15:8]};
                 state <= Out2;
                 down_wen <= 1;
-                if(token) up_cnt <= up_cnt - 3;
+                if (token) up_cnt <= up_cnt - 3;
                 else up_cnt <= up_cnt + 1;
             end
             Out2: begin
@@ -74,13 +74,13 @@ always @(posedge clk) begin
                 down_wdata <= {{data1[15:8],data0[15:8]}, {data1[7:0], data0[7:0]}};
                 state <= Out3;
                 down_wen <= 0;
-                if(token) up_cnt <= up_cnt - 4;
+                if (token) up_cnt <= up_cnt - 4;
             end
             Out3: begin
                 data3 <= {temp_data[63:56], temp_data[31:24]};
                 state <= STOR;
                 down_wen <= 1;
-                if(token) up_cnt <= up_cnt - 3;
+                if (token) up_cnt <= up_cnt - 3;
                 else up_cnt <= up_cnt + 1;
                 
             end
@@ -88,8 +88,12 @@ always @(posedge clk) begin
                 down_wptr <= down_wptr + 1;
                 down_wdata <= {{data3[15:8],data2[15:8]}, {data3[7:0], data2[7:0]}};
                 down_wen <= 0;
-                if(token) up_cnt <= up_cnt - 4; 
-                state <= IDLE;
+                if (token) up_cnt <= up_cnt - 4;
+                if (valid_in && up_cnt < 8) begin
+                    state <= Out0;
+                    temp_data <= data_in;
+                end
+                else state <= IDLE;
             end
         endcase
     end
