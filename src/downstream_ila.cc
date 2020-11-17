@@ -50,7 +50,7 @@ BSG_DOWNSTREAM::BSG_DOWNSTREAM()
 
         auto wptr_updated = wptr + 1; 
         instr.SetUpdate(wptr, Ite(io_valid == BvConst(1,1), wptr_updated, wptr));
-        instr.SetUpdate(full, Ite(io_valid == BvConst(1,1) & wptr_updated(BUFFER_BIT) != rptr(BUFFER_BIT) & wptr(BUFFER_BIT - 1, 0) == rptr(BUFFER_BIT - 1, 0), 
+        instr.SetUpdate(full, Ite(io_valid == BvConst(1,1) & wptr_updated(BUFFER_BIT) != rptr(BUFFER_BIT) & wptr_updated(BUFFER_BIT - 1, 0) == rptr(BUFFER_BIT - 1, 0), 
                               BvConst(1,1), BvConst(0,1)));
         instr.SetUpdate(wptr_t, Ite(io_valid == BvConst(1,1), wptr_updated, wptr));
     }

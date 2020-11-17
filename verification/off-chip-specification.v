@@ -112,12 +112,12 @@ always @(posedge clk) begin
             valid_out <= 1;
         end
 
-        if (ready & down_wptr != down_rptr & down_rptr[0] == 0) begin
+        if (ready & (down_wptr != down_rptr) & (down_rptr[0] == 0 )) begin
             down_data_out0 <= down_data_o;
             down_rptr <= down_rptr + 1;
             valid_temp <= 0;
         end
-        else if (ready & down_wptr != down_rptr & down_rptr[0] == 1) begin
+        else if (ready & (down_wptr != down_rptr) & (down_rptr[0] == 1)) begin
             down_data_out1 <= down_data_o;
             down_rptr <= down_rptr + 1;
             valid_temp <= 1;

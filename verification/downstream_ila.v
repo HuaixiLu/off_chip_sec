@@ -217,7 +217,7 @@ assign n50 = rptr[3:3] ;
 assign n51 =  ( n49 ) == ( n50 )  ;
 assign n52 = ~ ( n51 )  ;
 assign n53 =  ( n48 ) & (n52 )  ;
-assign n54 = wptr[2:0] ;
+assign n54 = n44[2:0] ;
 assign n55 = rptr[2:0] ;
 assign n56 =  ( n54 ) == ( n55 )  ;
 assign n57 =  ( n53 ) & (n56 )  ;
