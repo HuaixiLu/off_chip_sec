@@ -130,7 +130,7 @@ always @(posedge clk) begin
     else down_rptr_token <= down_rptr[2];
 end
 
-Memory mem(
+Memory_32 mem(
     .clk(clk),
     .rst(rst),
     .r_addr(down_rptr),
@@ -143,7 +143,7 @@ Memory mem(
 endmodule
 
 
-module Memory
+module Memory_32
 #(
 	parameter N_ELEMENTS = 8,
 	parameter ADDR_WIDTH = 4,
