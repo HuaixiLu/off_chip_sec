@@ -154,6 +154,7 @@ always @(posedge clk) begin
         counter <= 0;
     end
     else begin
+        local_data <= local_data;
         req <= (valid_in == 1) & (state == IDLE | state == STOR);
         req_x <= (valid_in == 1) & (data_in == local_data) & (state == IDLE | state == STOR);
         ack <= (valid_out == 1);
