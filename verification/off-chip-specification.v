@@ -125,8 +125,8 @@ always @(posedge clk) begin
             down_rptr <= down_rptr + 1;
             valid_temp <= 1;
         end
-        else if (ready)
-            valid_temp <= 0;
+        // else if (ready)
+        //     valid_temp <= 0;
     end
 end
 
