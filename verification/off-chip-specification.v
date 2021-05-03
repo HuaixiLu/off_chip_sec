@@ -105,6 +105,7 @@ always @(posedge clk) begin
         down_rptr <= 0;
         data_out <= 0;
         valid_out <= 0;
+        valid_temp <= 0;
     end
     else begin
         if (ready && valid_out)
