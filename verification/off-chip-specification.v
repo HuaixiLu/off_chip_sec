@@ -146,9 +146,9 @@ always @(posedge clk) begin
     end
     else begin
         req <= (valid_in == 1) & (data_in == 5) & (state == IDLE | state == STOR);
-        ack <= (valid_out == 1) & (data_out == 5) & (ready == 1);
+        ack <= (valid_out == 1) & (data_out == 5);
         if (req == 1 && ack == 0) counter++;
-        else if (req == 0 && ack == 1) counter--;
+        else if (req == 0 && ack == 1 && ready == 1) counter--;
     end
 end
 
