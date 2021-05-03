@@ -130,6 +130,19 @@ always @(posedge clk) begin
     else down_rptr_token <= down_rptr[2];
 end
 
+reg req;
+reg ack;
+always @(posedge clk) begin
+    if (rst) begin
+        req <= 0;
+        ack <= 0;
+    end
+    else begin
+        req <= (valid_in == 1 && data_in == 5);
+        ack <= (valid_out == 1 && data_out == 5);
+    end
+end
+
 Memory_32 mem(
     .clk(clk),
     .rst(rst),
