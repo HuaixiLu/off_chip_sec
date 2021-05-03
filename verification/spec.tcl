@@ -8,4 +8,4 @@ reset rst
 assume {ready == 1}
 
 assert {@(posedge clk) valid_in |=> ##[0:$] valid_out}
-assert {@(posedge clk) ack |=> ##[0:$] req}
+assert {req |=> ##[0:$] ack}
