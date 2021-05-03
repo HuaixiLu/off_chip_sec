@@ -142,7 +142,7 @@ reg ack_x;
 reg scd;
 reg scd_x;
 reg [3:0] counter;
-wire[15:0] local_data;
+reg[15:0] local_data;
 always @(posedge clk) begin
     if (rst) begin
         req <= 0;
