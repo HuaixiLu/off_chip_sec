@@ -9,3 +9,4 @@ assume {ready == 1}
 
 assert {@(posedge clk) valid_in |=> ##[0:$] valid_out}
 assert {req |=> ##[0:$] ack}
+assert {counter < 8}
