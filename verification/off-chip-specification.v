@@ -143,7 +143,7 @@ always @(posedge clk) begin
         ack <= 0;
     end
     else begin
-        req <= (valid_in == 1) & (data_in == 5);
+        req <= (valid_in == 1) & (data_in == 5) & (state == IDLE | state == STOR);
         ack <= (valid_out == 1) & (data_out == 5);
     end
 end
