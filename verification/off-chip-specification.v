@@ -137,19 +137,29 @@ end
 
 reg req;
 reg ack;
+reg req_x;
+reg ack_x;
 reg scd;
+reg scd_x;
 reg [3:0] counter;
+wire[15:0] local_data;
 always @(posedge clk) begin
     if (rst) begin
         req <= 0;
         ack <= 0;
+        req_x <= 0;
+        ack_x <= 0;
         scd <= 0;
+        scd_x <= 0;
         counter <= 0;
     end
     else begin
-        req <= (valid_in == 1) & (data_in == 5) & (state == IDLE | state == STOR);
-        ack <= (valid_out == 1) & (data_out == 5);
-        scd <= (valid_out == 1) & (data_out == 5) && (ready == 1);
+        req <= (valid_in == 1) & (state == IDLE | state == STOR);
+        req_x <= (valid_in == 1) & (data_in == local_data) & (state == IDLE | state == STOR);
+        ack <= (valid_out == 1);
+        ack_x <= (valid_out == 1) & (data_out == local_data);
+        scd <= (valid_out == 1) & (ready == 1);
+        scd_x <= (valid_out == 1) & (data_out == local_data) & (ready == 1);
         if (req == 1 && scd == 0) counter++;
         else if (req == 0 && scd == 1) counter--;
     end

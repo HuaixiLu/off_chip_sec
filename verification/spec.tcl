@@ -9,4 +9,5 @@ assume {@(posedge clk) ((down_wptr != down_rptr) | (valid_out == 1)) |-> ##[0:$]
 
 assert {@(posedge clk) valid_in |=> ##[0:$] valid_out}
 assert {req |=> ##[0:$] ack}
+assert {req_x |=> ##[0:$] ack_x}
 assert {counter < 8}
